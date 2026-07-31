@@ -238,7 +238,6 @@
     });
 
     entries.push({ label: 'Email Anahit', meta: 'anahit.hakobyan097@gmail.com', group: 'Contact', target: 'mailto:anahit.hakobyan097@gmail.com', external: true });
-    entries.push({ label: 'Call Anahit', meta: '+374 77 753 405', group: 'Contact', target: 'tel:+37477753405', external: true });
     entries.push({ label: 'LinkedIn profile', group: 'Contact', target: 'http://www.linkedin.com/in/anahit-hakobyan097', external: true });
 
     var results = [];
