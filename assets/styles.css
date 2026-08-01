@@ -53,7 +53,9 @@
   /* Layout */
   --page-max-width: 1200px;
   --gutter: clamp(20px, 4vw, 40px);
-  --section-gap: clamp(72px, 9vw, 128px);
+  /* Applied as padding on top and bottom of adjacent sections, so the
+     visible gap between two blocks is roughly double this value. */
+  --section-gap: clamp(36px, 4vw, 56px);
   --card-padding: clamp(20px, 2.2vw, 28px);
   --topbar-h: 68px;
 
@@ -170,7 +172,7 @@ main { position: relative; z-index: 1; }
 .section__head {
   display: grid;
   gap: var(--spacing-8);
-  margin-bottom: clamp(28px, 3.4vw, 48px);
+  margin-bottom: clamp(18px, 2vw, 28px);
 }
 
 .section__index {
@@ -363,7 +365,7 @@ main { position: relative; z-index: 1; }
 
 /* ── Hero ──────────────────────────────────────────────── */
 .hero {
-  padding-block: clamp(56px, 9vw, 108px) clamp(48px, 7vw, 88px);
+  padding-block: clamp(36px, 5vw, 64px) clamp(32px, 4vw, 56px);
 }
 .hero__inner {
   display: grid;
@@ -493,7 +495,7 @@ main { position: relative; z-index: 1; }
 }
 
 .hero__name {
-  margin-top: clamp(20px, 2.6vw, 32px);
+  margin-top: clamp(14px, 1.8vw, 22px);
   font-size: var(--text-display);
   font-weight: 800;
   line-height: 1.02;
@@ -531,7 +533,7 @@ main { position: relative; z-index: 1; }
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-8);
-  margin-top: clamp(24px, 3vw, 36px);
+  margin-top: clamp(18px, 2.2vw, 26px);
 }
 
 .chip {
@@ -558,7 +560,7 @@ main { position: relative; z-index: 1; }
 .chip:hover svg { color: var(--color-aurora-start); }
 
 .hero__hint {
-  margin-top: clamp(28px, 3.4vw, 40px);
+  margin-top: clamp(20px, 2.4vw, 28px);
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -810,10 +812,10 @@ main { position: relative; z-index: 1; }
   z-index: 1;
   margin-top: var(--section-gap);
   border-top: 1px solid var(--color-graphite);
-  padding-block: clamp(56px, 7vw, 96px) var(--spacing-32);
+  padding-block: clamp(36px, 4.5vw, 60px) var(--spacing-24);
 }
 
-.footer__inner { display: grid; gap: clamp(40px, 5vw, 64px); }
+.footer__inner { display: grid; gap: clamp(24px, 3vw, 40px); }
 .footer__cta { display: grid; justify-items: start; }
 
 .footer__title {
