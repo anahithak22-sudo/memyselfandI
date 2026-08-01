@@ -365,7 +365,106 @@ main { position: relative; z-index: 1; }
 .hero {
   padding-block: clamp(56px, 9vw, 108px) clamp(48px, 7vw, 88px);
 }
-.hero__inner { display: grid; justify-items: start; }
+.hero__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(260px, 30vw, 440px);
+  align-items: center;
+  gap: clamp(24px, 4vw, 56px);
+}
+.hero__content { display: grid; justify-items: start; min-width: 0; }
+
+/* ── Hero orbit graphic ────────────────────────────────── */
+.hero__visual { display: grid; place-items: center; min-width: 0; }
+
+.orbit {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(100%, 420px);
+  aspect-ratio: 1;
+}
+
+.orbit__halo,
+.orbit__ring,
+.orbit__core,
+.orbit__spark { position: absolute; border-radius: var(--radius-full); }
+
+/* Soft glow bed */
+.orbit__halo {
+  inset: 8%;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(56, 152, 255, 0.28), transparent 62%),
+    radial-gradient(circle at 62% 38%, rgba(122, 112, 255, 0.24), transparent 66%);
+  filter: blur(18px);
+  animation: haloPulse 7s ease-in-out infinite alternate;
+}
+@keyframes haloPulse {
+  from { opacity: 0.75; transform: scale(0.96); }
+  to   { opacity: 1;    transform: scale(1.04); }
+}
+
+/* Elliptical orbit rings. The dot is a child of the ring, so both rotate
+   together and the dot stays locked on the ellipse. */
+.orbit__ring {
+  inset: 0;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  animation: orbitSpin 26s linear infinite;
+}
+.orbit__ring--a { inset: 2% 2%;  height: 46%; top: 27%; animation-duration: 22s; }
+.orbit__ring--b { inset: 9% 9%;  height: 62%; top: 19%; animation-duration: 34s; animation-direction: reverse; border-color: rgba(122, 112, 255, 0.24); }
+.orbit__ring--c { inset: 18% 18%; height: 64%; top: 18%; animation-duration: 44s; border-color: rgba(56, 152, 255, 0.2); border-style: dashed; }
+
+@keyframes orbitSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.orbit__dot {
+  position: absolute;
+  top: 50%;
+  right: -5px;
+  width: 10px; height: 10px;
+  margin-top: -5px;
+  border-radius: var(--radius-full);
+  background: var(--gradient-aurora);
+  box-shadow: 0 0 14px rgba(56, 152, 255, 0.9), inset 0 0 0 1px var(--hairline);
+}
+.orbit__ring--b .orbit__dot { width: 7px; height: 7px; margin-top: -3.5px; right: -3.5px; }
+.orbit__ring--c .orbit__dot { width: 5px; height: 5px; margin-top: -2.5px; right: -2.5px; box-shadow: 0 0 10px rgba(122, 112, 255, 0.9); }
+
+/* Core sphere */
+.orbit__core {
+  width: 38%;
+  aspect-ratio: 1;
+  background:
+    radial-gradient(circle at 34% 28%, #a9d0ff 0%, #3898ff 38%, #6f66f5 72%, #2e2098 100%);
+  box-shadow:
+    0 0 70px rgba(56, 152, 255, 0.42),
+    0 0 140px rgba(122, 112, 255, 0.22),
+    inset -10px -14px 34px rgba(11, 8, 48, 0.55),
+    inset 8px 10px 26px rgba(255, 255, 255, 0.22);
+  animation: coreFloat 9s ease-in-out infinite alternate;
+}
+@keyframes coreFloat {
+  from { transform: translateY(-7px); }
+  to   { transform: translateY(7px); }
+}
+
+/* Drifting specks */
+.orbit__spark {
+  width: 4px; height: 4px;
+  background: var(--color-snow);
+  opacity: 0.5;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+  animation: sparkDrift 6s ease-in-out infinite alternate;
+}
+.orbit__spark--1 { top: 12%; left: 22%; animation-delay: -1s; }
+.orbit__spark--2 { top: 74%; left: 14%; width: 3px; height: 3px; animation-delay: -3s; }
+.orbit__spark--3 { top: 26%; left: 84%; width: 3px; height: 3px; animation-delay: -5s; }
+@keyframes sparkDrift {
+  from { transform: translateY(-6px); opacity: 0.25; }
+  to   { transform: translateY(6px);  opacity: 0.7; }
+}
 
 .eyebrow {
   display: inline-flex;
@@ -399,6 +498,7 @@ main { position: relative; z-index: 1; }
   font-weight: 800;
   line-height: 1.02;
   letter-spacing: 1.3px;
+  overflow-wrap: break-word;
   background: linear-gradient(96deg, #ffffff 4%, #3898ff 46%, #7a70ff 88%);
   background-size: 220% 100%;
   -webkit-background-clip: text;
@@ -885,6 +985,11 @@ body.is-locked { overflow: hidden; }
   .brand__badge { display: none; }
 }
 
+@media (max-width: 980px) {
+  .hero__inner { grid-template-columns: 1fr; }
+  .hero__visual { display: none; }
+}
+
 @media (max-width: 900px) {
   .about { grid-template-columns: 1fr; }
   .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -924,7 +1029,9 @@ body.is-locked { overflow: hidden; }
 
 /* ── Print ─────────────────────────────────────────────── */
 @media print {
-  .topbar, .palette, .bg-aurora, .bg-grid, .skip-link, .filters, .hero__hint { display: none; }
+  .topbar, .palette, .bg-aurora, .bg-grid, .skip-link, .filters, .hero__hint,
+  .hero__visual { display: none; }
+  .hero__inner { grid-template-columns: 1fr; }
   body { background: #fff; color: #000; }
   .card { box-shadow: none; border: 1px solid #ccc; background: #fff; }
   .role__body { height: auto; overflow: visible; }
