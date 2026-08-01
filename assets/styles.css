@@ -828,18 +828,7 @@ main { position: relative; z-index: 1; }
   background-clip: text;
   color: transparent;
 }
-.footer__sub { margin-top: 10px; color: var(--color-fog); font-size: var(--text-body-sm); }
-.contact-row--footer { margin-top: var(--spacing-24); }
-
-.footer__legal {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  padding-top: var(--spacing-24);
-  border-top: 1px solid var(--color-graphite);
-  font-size: var(--text-caption);
-  color: var(--color-muted);
-}
+.contact-row--footer { margin-top: var(--spacing-20); }
 
 /* ── Command palette ───────────────────────────────────── */
 .palette {
